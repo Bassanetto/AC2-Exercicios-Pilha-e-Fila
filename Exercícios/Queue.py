@@ -1,5 +1,3 @@
-from Node import Node
-
 class Queue:
     def __init__(self):
         self.first = None
@@ -12,7 +10,7 @@ class Queue:
             self.last = node
         else:
             self.last.next = node
-            self.last = node
+            self.last = node  
         if self.first is None:
             self.first = node
         self._size = self._size + 1
@@ -25,25 +23,25 @@ class Queue:
                 self.last = None
             self._size = self._size - 1
             return elem
-        raise IndexError("The queue is empty")
+        raise IndexError("A fila está vazia")
 
     def peek(self):
         if self._size > 0:
             elem = self.first.data
             return elem
-        raise IndexError("The queue is empty")
+        raise IndexError("A fila está vazia")
 
     def _len_(self):
         """Retorna o tamanho da lista"""
         return self._size
 
     def _repr_(self):
-        res = ""
+        r = ""
         pointer = self.first
         while(pointer):
-            res = res + str(pointer.data) + "\n"
+            r = r + str(pointer.data) + "\n"
             pointer = pointer.next
-        return res
+        return r
 
     def _str_(self):
         return self._repr_()
