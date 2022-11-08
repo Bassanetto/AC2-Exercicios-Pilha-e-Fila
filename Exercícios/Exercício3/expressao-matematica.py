@@ -1,59 +1,70 @@
-from Node import Node 
-
+from Node import Node
 class Stack:
     def __init__(self):
         self.top = None
         self._size = 0
 
     def push(self, elem):
+        #insere um elemento na pilha
         node = Node(elem)
         node.next = self.top
         self.top = node
         self._size = self._size + 1
 
     def pop(self):
-        if self._size >0:
-            elem = self.top.data
+        # remove o elemento do topo da pilha
+        if self._size > 0:
+            node = self.top
             self.top = self.top.next
-            self._size -=1
-            return elem
+            self._size -= 1
+            return node.data
         raise IndexError("The stack is empty")
 
     def peek(self):
+        # retorna o topo sem remover
         if self._size > 0:
             return self.top.data
         raise IndexError("The stack is empty")
 
-
-    def _len_(self):
+    def __len__(self):
         """Retorna o tamanho da lista"""
         return self._size
 
-    def _repr_(self):
+    def __repr__(self):
         r = ""
         pointer = self.top
         while(pointer):
             r = r + str(pointer.data) + "\n"
-            pointer = pointer.next  
+            pointer = pointer.next
         return r
 
-    def _str_(self):
-        return self._repr_()
+    def __str__(self):
+        return self.__repr__()
 
-pilhaAberta = Stack()
+while True:
+    input = input("Digite a expressão matemática desejada: ")
+    abreExpressao = Stack()
+    fechaExpressao = Stack()
+    valido = True
+  
+    for x in input:
+        if x == "(":
+            abreExpressao.push(x)
+        elif x == ")": 
+            fechaExpressao.push(x)
+            #Verificar a condição 2.
+            if len(fechaExpressao) > len(abreExpressao):
+                valido = False
 
-expressao = str(input("Digite uma Expressão Aritmética: "))
+    #Verificar a condição 1.
+    if len(abreExpressao) != len(fechaExpressao):
+        valido = False
 
-for simbolo in expressao:
-    if simbolo == "(":
-        pilhaAberta.push("(")   
-    elif simbolo == ")":
-        if len(pilhaAberta) >0:
-            pilhaAberta.pop()
-        else:
-            pilhaAberta.push(")")
-            break
-if len (pilhaAberta) ==0:
-    print ("Sua expressão Aritimética está certa!")
-else:
-    print ("Sua expressão Aritimética está errada!")
+    if valido == True:
+        print("=======================")
+        print("✅ Expressão válida. ✅")
+        print("=======================")
+    else:
+        print("=======================")
+        print("🚫 Expressão inválida. 🚫")
+        print("=======================")
